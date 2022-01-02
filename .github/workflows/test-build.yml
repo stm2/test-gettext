@@ -1,0 +1,55 @@
+name: Automatic build and release
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build_win:
+    name: Build for Windows
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: make
+        run: |
+          mkdir out
+          cd out
+          # vcpkg install gettext
+          vcpkg list
+          vcpkg integrate install
+          echo dir
+          dir C:\vcpkg\scripts\buildsystems\vcpkg.cmake
+          dir C:\*libintl* -Recurse
+          echo cmake
+          cmake .. "-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+          cmake --build .
+          dir
+          cd ..
+          dir
+          out/test_intl.exe
+
+      - name: Create zip
+        run: |
+          zip -r test.zip out
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: release
+          path: test.zip
+
+      - name: Create release
+        uses: meeDamian/github-release@2.0
+        with:
+          prerelease: true
+          draft: false
+          allow_override: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ env.TAG }}
+          name: mytest
+          body: Hello, Test!
+          gzip: folders
+          files: >
+            test.zip
