@@ -23,13 +23,16 @@ jobs:
           # dir C:\vcpkg\scripts\buildsystems\vcpkg.cmake
           # dir C:\*libintl* -Recurse
           echo cmake
-          cmake .. "-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+          cmake --help
+          # cmake.. "-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+          cmake -G "MinGW Makefiles" ..
           cmake --build .
           echo made
           dir
+          echo dir
           cd ..
           dir
-          out/test_intl.vcxproj
+          out/test_intl
 
       - name: Create zip
         run: |
