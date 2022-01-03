@@ -28,7 +28,7 @@ jobs:
           dir
           cd ..
           dir
-          out/test_intl.exe
+          out/test_intl.vcxproj
 
       - name: Create zip
         run: |
