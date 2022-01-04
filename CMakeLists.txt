@@ -4,15 +4,15 @@ project(test)
 
 add_executable(test_intl test_intl.c)
 
-#if (WIN32)
-#find_library(Intl_LIBRARY NAMES libintl intl
-#  DOC "libintl libraries (if not in the C library)")
-#endif (WIN32)
+if (WIN32)
+find_library(Intl_LIBRARY NAMES libintl intl
+  DOC "libintl libraries (if not in the C library)")
+endif (WIN32)
 
-# find_package(Intl)
+ find_package(Intl)
 
-#include_directories(${Intl_INCLUDE_DIR})
-#target_link_libraries(test_intl ${Intl_LIBRARIES})
+include_directories(${Intl_INCLUDE_DIR})
+target_link_libraries(test_intl ${Intl_LIBRARIES})
 
 
 # if (WIN32)

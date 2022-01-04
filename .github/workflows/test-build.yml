@@ -16,22 +16,20 @@ jobs:
         run: |
           mkdir out
           cd out
-          # vcpkg install gettext
-          # vcpkg list
-          # vcpkg integrate install
+          dir C:\vcpkg\scripts\buildsystems\vcpkg.cmake
+          type C:\vcpkg\scripts\buildsystems\vcpkg.cmake
+          vcpkg integrate install
+          vcpkg install gettext
+          vcpkg list
           # echo dir
-          # dir C:\vcpkg\scripts\buildsystems\vcpkg.cmake
           # dir C:\*libintl* -Recurse
           echo cmake
           cmake --help
-          # cmake.. "-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
-          cmake -G "MinGW Makefiles" ..
+          cmake -G "MinGW Makefiles" "-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake" ..
           cmake --build .
           echo made
           dir
-          echo dir
           cd ..
-          dir
           out/test_intl
 
       - name: Create zip
